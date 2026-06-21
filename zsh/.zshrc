@@ -15,7 +15,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -83,12 +83,6 @@ plugins=(
 
   # Jump around the file system by manually adding marks
   jump 
-
-  # It suggests commands based on history and completions
-  zsh-autosuggestions 
-
-  # Syntax highlighting for Zsh
-  zsh-syntax-highlighting 
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -128,7 +122,12 @@ alias gia="git add"
 alias gic="git commit"
 alias gid="git diff"
 alias gil="git log"
+alias gil1="git log --oneline"
 alias gis="git status"
+
+alias nv=nvim
+
+alias code="'/Applications/Visual Studio Code.app/Contents/MacOS/Electron'"
 
 # customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -136,8 +135,8 @@ alias gis="git status"
 # setup zoxide
 eval "$(zoxide init zsh)"
 
-# setup fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 
@@ -160,10 +159,19 @@ _fzf_comprun() {
 }
 
 # to look for git related things (commits, hashes, files and more) with fzf
-source ~/.fzf-git.sh/fzf-git.sh
+source ~/.fzf-git/fzf-git.sh
 
 # configure thef*ck alias
 eval $(thefuck --alias)
 
+# it suggests commands based on history and completions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# syntax highlighting for Zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# install powerlevel10k theme
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+
 # bat theme
 export BAT_THEME=Catppuccin_Mocha
+export PATH="/opt/homebrew/opt/llvm@15/bin:$PATH"
